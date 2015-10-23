@@ -5,11 +5,11 @@
         <div class="list">
           <label class="item item-input item-stacked-label">
             <span class="input-label">Title</span>
-            <input type="text" placeholder="ex. Lubak sa QC">
+            <input type="text" placeholder="ex. Lubak sa QC" ng-model="complaints.title">
           </label>
 
           <label class="item item-input item-stacked-label">
-            <span class="input-label">Description</span>
+            <span class="input-label" ng-model="complaints.description">Description</span>
             <textarea row="20" placeholder="ex. May malaking lubak sa gitna ng kalye"></textarea>
           </label>
 
@@ -17,15 +17,15 @@
             <div class="input-label">
               Category
             </div>
-            <select>
-              <option>Pothole</option>
+            <select ng-model="complaints.category">
+              <option>Pothole Problem</option>
               <option selected>Broken Street lights</option>
-              <option>Red</option>
+              <option>Trash Problem</option>
             </select>
           </label>
 
           <div class="padding">
-            <button class="button button-block button-positive" ng-click="takePic()">Take Photo</button>
+            <button class="button button-block button-positive" ng-click="selectPicture()">Take Photo</button>
           </div>
 
 
@@ -33,15 +33,15 @@
             <button class="button button-block button-positive" ng-click="save()">Save</button>
           </div>
 
-        </div>
+          <div class="padding full">
+            <canvas id="myimg"></canvas>
+          </div>
 
-        <div id="map" data-tap-disabled="true"></div>
 
 
-
-        <ion-footer-bar class="bar-positive">
+        <!-- <ion-footer-bar class="bar-positive">
           <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
-        </ion-footer-bar>
+        </ion-footer-bar> -->
 
   </ion-content>
 </ion-view>

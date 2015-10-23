@@ -12,3 +12,29 @@
 textarea{
   height: 70px;
 }
+
+.padded {
+  padding: 20px;
+}
+
+/*.scroll-content{
+      padding: 20px;
+}*/
+
+.element.ng-hide{
+  display:none;
+}
+
+.ng-hide-add,
+.ng-hide-remove {
+  display: none !important;
+}
+
+
+.full{
+  width: 100%;
+}
+canvas{
+  width: 100%;
+  height: auto;
+}

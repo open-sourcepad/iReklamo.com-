@@ -5,21 +5,25 @@
       <button class="button button-clear" ng-click="closeLogin()">Close</button>
     </div>
   </ion-header-bar>
-  <ion-content>
+  <ion-content class="padded">
     <form ng-submit="doLogin()">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
+          <input type="text" ng-model="credentials.email">
         </label>
         <label class="item item-input">
           <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
+          <input type="password" ng-model="credentials.password">
         </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
+
       </div>
     </form>
+
+    <a class="button button-block button-positive" ng-click="doLogin()">Log in</a>
+    <!-- <button class="button button-block button-positive"  ng-click="goTo('register')">Register</a>
+ -->
+
+
   </ion-content>
 </ion-modal-view>

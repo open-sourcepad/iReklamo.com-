@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($rootScope,$scope, $ionicModal, $timeout, $cordovaCamera, $cordovaFile,User) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -14,39 +14,40 @@ angular.module('starter.controllers', [])
 
   $scope.navTitle = '<i class="icon icon-plus"/>';
 
+  $scope.newUser = {
+    email: "",
+    name: "",
+    password: "",
+    password_confirmation: ""
+  }
 
-  $scope.takePic = function() {
-     var options =   {
-         quality: 50,
-         destinationType: Camera.DestinationType.DATA_URL,
-         sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-         encodingType: 0     // 0=JPG 1=PNG
-     }
-     // Take picture using device camera and retrieve image as base64-encoded string
-     navigator.camera.getPicture(onSuccess,onFail,options);
-   }
-   var onSuccess = function(imageData) {
-       console.log("On Success! ");
-       $scope.picData = "data:image/jpeg;base64," +imageData;
-       $scope.$apply();
-   };
 
-   $scope.send = function() {
-   var myImg = $scope.picData;
-   var options = new FileUploadOptions();
-           options.fileKey="pics";
-           options.chunkedMode = false;
+  $scope.credentials = {
+    email: "",
+    password: ""
+  }
 
-           var params = {};
-           params.user_token = localStorage.getItem('auth_token');
-           params.user_email = localStorage.getItem('email');
-           options.params = params;
+  localUser = localStorage.getItem('user');
+  if(!!localUser){
+    $rootScope.currentUser = JSON.parse(localStorage.getItem('user'));
+  }
+  else {
+    $rootScope.currentUser = false;
+  }
 
-       var ft = new FileTransfer();
-       ft.upload(myImg.src, encodeURI("https://xxx.herokuapp.com/ics/"), onUploadSuccess, onUploadFail, options);
+  $scope.doLogin = function(){
 
-   };
+    User.save({user: $scope.credentials}).$promise.then(function(data) {
+      $rootScope.user = data
+      localStorage.setItem('user', JSON.stringify(data.user));
+    });
+  };
 
+  $scope.doRegister = function(){
+    User.login({user: $scope.newUser}).$promise.then(function(data) {
+      localStorage.setItem('user', JSON.stringify(data.user));
+    });
+  };
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -55,9 +56,22 @@ angular.module('starter.controllers', [])
     $scope.modal = modal;
   });
 
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/register.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.registerModal = modal;
+  });
+
+
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
     $scope.modal.hide();
+  };
+
+  // Triggered in the login modal to close it
+  $scope.closeRegister = function() {
+    $scope.registerModal.hide();
   };
 
   // Open the login modal
@@ -65,16 +79,21 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
+  // Open the login modal
+  $scope.register = function() {
+    $scope.registerModal.show();
   };
+
+  // Perform the login action when the user submits the login form
+  // $scope.doLogin = function() {
+  //   console.log('Doing login', $scope.loginData);
+  //
+  //   // Simulate a login delay. Remove this and replace with your login
+  //   // code if using a login system
+  //   $timeout(function() {
+  //     $scope.closeLogin();
+  //   }, 1000);
+  // };
 })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -128,7 +147,7 @@ angular.module('starter.controllers', [])
     $scope.map = map;
   }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+  //google.maps.event.addDomListener(window, 'load', initialize);
 
   $scope.centerOnMe = function() {
     if(!$scope.map) {
@@ -148,6 +167,8 @@ angular.module('starter.controllers', [])
       alert('Unable to get location: ' + error.message);
     });
   };
+
+  ionic.Platform.ready(initialize);
 
   $scope.clickTest = function() {
     alert('Example of infowindow with ng-click')

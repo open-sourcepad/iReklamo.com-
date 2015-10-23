@@ -18,21 +18,24 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
+        <ion-item menu-close ng-click="login()" ng-show="currentUser!=null">
           Login
+        </ion-item>
+        <ion-item menu-close ng-click="register()" ng-show="currentUser!=null">
+          Register
         </ion-item>
         <ion-item menu-close href="#/app/complains">
           Complains
         </ion-item>
-        <ion-item menu-close ng-click="takePic()">
+        <ion-item menu-close href="#/app/complain_new">
           New Complain
         </ion-item>
         <ion-item menu-close href="#/app/browse">
           Settings
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
+        <!-- <ion-item menu-close href="#/app/playlists">
           Logout
-        </ion-item>
+        </ion-item> -->
       </ion-list>
     </ion-content>
   </ion-side-menu>
