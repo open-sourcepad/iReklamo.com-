@@ -1,5 +1,5 @@
 <ion-view view-title="New Complain">
-  <ion-content>
+  <ion-content ng-init="setDefault()">
 
 
         <div class="list">
@@ -10,7 +10,7 @@
 
           <label class="item item-input item-stacked-label">
             <span class="input-label" ng-model="complaints.description">Description</span>
-            <textarea row="20" placeholder="ex. May malaking lubak sa gitna ng kalye"></textarea>
+            <textarea row="20" placeholder="ex. May malaking lubak sa gitna ng kalye" ng-model="complaints.description"></textarea>
           </label>
 
           <label class="item item-input item-select">

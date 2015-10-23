@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($rootScope,$scope, $ionicModal, $timeout, $cordovaCamera, $cordovaFile,User) {
+.controller('AppCtrl', function($ionicLoading,$rootScope,$scope, $ionicModal, $timeout, $cordovaCamera, $cordovaFile,User) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -36,17 +36,26 @@ angular.module('starter.controllers', [])
   }
 
   $scope.doLogin = function(){
-
+    $ionicLoading.show({template: 'Loading..', duration:500});
     User.save({user: $scope.credentials}).$promise.then(function(data) {
       $rootScope.user = data
       localStorage.setItem('user', JSON.stringify(data.user));
-    });
+      $scope.closeLogin();
+    }).finally(function(){
+        $ionicLoading.hide();
+      }
+    );
   };
 
   $scope.doRegister = function(){
+        $ionicLoading.show({template: 'Loading..', duration:500});
     User.login({user: $scope.newUser}).$promise.then(function(data) {
       localStorage.setItem('user', JSON.stringify(data.user));
-    });
+      $scope.closeRegister();
+    }).finally(function(){
+        $ionicLoading.hide();
+      }
+    );
   };
 
   // Create the login modal that we will use later
