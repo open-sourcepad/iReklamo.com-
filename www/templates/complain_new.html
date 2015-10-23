@@ -1,0 +1,47 @@
+<ion-view view-title="New Complain">
+  <ion-content>
+
+
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Title</span>
+            <input type="text" placeholder="ex. Lubak sa QC">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Description</span>
+            <textarea row="20" placeholder="ex. May malaking lubak sa gitna ng kalye"></textarea>
+          </label>
+
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Category
+            </div>
+            <select>
+              <option>Pothole</option>
+              <option selected>Broken Street lights</option>
+              <option>Red</option>
+            </select>
+          </label>
+
+          <div class="padding">
+            <button class="button button-block button-positive" ng-click="takePic()">Take Photo</button>
+          </div>
+
+
+          <div class="padding">
+            <button class="button button-block button-positive" ng-click="save()">Save</button>
+          </div>
+
+        </div>
+
+        <div id="map" data-tap-disabled="true"></div>
+
+
+
+        <ion-footer-bar class="bar-positive">
+          <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
+        </ion-footer-bar>
+
+  </ion-content>
+</ion-view>
